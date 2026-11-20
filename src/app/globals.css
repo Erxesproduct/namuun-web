@@ -1,0 +1,382 @@
+@import "tailwindcss";
+
+/* «Бүүвэйн тэнгэр» (lullaby sky): the Namuun logo is a sleeping baby under a night-blue moon with a crib mobile (stars,
+   a little fox), the name in bubbly sky-blue letters outlined in navy, and the banners add soft clouds, a pink blanket,
+   yellow stars and dusty-rose cards. The shop turns that into: a deep navy night for the hero and footer, a pale
+   morning sky for the pages, sky-blue and pink as the two voices, yellow for stars and the buy button, round bubbly
+   type. Motion is a slowly swinging mobile, twinkling stars and drifting clouds; all of it stops for reduced motion. */
+@theme {
+  --color-night: #0e2b52;
+  --color-night-2: #3b5189;
+  --color-night-3: #1b3c6e;
+  --color-sky: #5bc4ee;
+  --color-sky-d: #157fb0;
+  --color-sky-l: #dcf1fb;
+  --color-morning: #f2f9fd;
+  --color-pink: #e9abc9;
+  --color-pink-d: #b9457f;
+  --color-pink-l: #fcebf3;
+  --color-sun: #f6b52a;
+  --color-sun-l: #fff2cf;
+  --color-rose: #d27c78;
+  --color-rose-l: #f9e4e2;
+  --color-lav: #9c83ba;
+  --color-lav-l: #efe9f7;
+  --color-line: #d9e6f1;
+  --color-ink: #0e2b52;
+  --color-ink-2: #44597a;
+  --color-ink-3: #74859e;
+  --color-ok: #23825a;
+  --color-ok-l: #e1f4ea;
+
+  --font-display: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+  --font-body: var(--font-nunito), ui-rounded, system-ui, sans-serif;
+}
+
+@keyframes swing {
+  0%,
+  100% {
+    transform: rotate(-3deg);
+  }
+  50% {
+    transform: rotate(3deg);
+  }
+}
+@keyframes twinkle {
+  0%,
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: scale(0.8);
+  }
+}
+@keyframes drift {
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(22px);
+  }
+}
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+@keyframes pop {
+  0% {
+    transform: scale(0.88);
+    opacity: 0;
+  }
+  70% {
+    transform: scale(1.03);
+    opacity: 1;
+  }
+  100% {
+    transform: none;
+  }
+}
+@keyframes bob {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+  body {
+    background: var(--color-morning);
+    color: var(--color-ink);
+    font-family: var(--font-body);
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+    overflow-x: clip;
+  }
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    font-weight: 900;
+    line-height: 1.12;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+  }
+  ::selection {
+    background: var(--color-sky-l);
+  }
+  :focus-visible {
+    outline: 3px solid var(--color-sky-d);
+    outline-offset: 2px;
+    border-radius: 12px;
+  }
+  .grid > * {
+    min-width: 0;
+  }
+}
+
+@layer components {
+  .wrap {
+    width: 100%;
+    max-width: 1280px;
+    margin-inline: auto;
+    padding-inline: 16px;
+  }
+  @media (min-width: 768px) {
+    .wrap {
+      padding-inline: 28px;
+    }
+  }
+  .display {
+    font-family: var(--font-display);
+    font-weight: 900;
+    letter-spacing: -0.015em;
+  }
+  /* the logo's lettering: sky-blue fill with a navy outline */
+  .bubble {
+    font-family: var(--font-display);
+    font-weight: 900;
+    color: var(--color-sky);
+    -webkit-text-stroke: 0.06em var(--color-night-2);
+    paint-order: stroke fill;
+    letter-spacing: 0.005em;
+  }
+  /* sentence case on purpose: Chrome drops text-transform: uppercase for strings with Ө/Ү under lang="mn" */
+  .kicker {
+    font-size: 14px;
+    font-weight: 800;
+    letter-spacing: 0.01em;
+    color: var(--color-sky-d);
+  }
+  .panel {
+    background: #fff;
+    border-radius: 28px;
+    box-shadow:
+      0 1px 0 rgb(14 43 82 / 0.04),
+      0 18px 40px -28px rgb(14 43 82 / 0.35);
+  }
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    min-height: 48px;
+    padding: 0 22px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 15.5px;
+    transition:
+      transform 0.15s ease,
+      background-color 0.2s ease,
+      box-shadow 0.2s ease,
+      color 0.2s ease;
+    white-space: nowrap;
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+  .btn-night {
+    background: var(--color-night);
+    color: #fff;
+  }
+  .btn-night:hover {
+    background: var(--color-night-3);
+  }
+  .btn-sun {
+    background: var(--color-sun);
+    color: var(--color-night);
+    box-shadow: 0 6px 0 -1px #d89510;
+  }
+  .btn-sun:hover {
+    background: #ffc443;
+  }
+  .btn-sun:active {
+    box-shadow: 0 2px 0 -1px #d89510;
+    transform: translateY(3px);
+  }
+  .btn-line {
+    background: #fff;
+    color: var(--color-night);
+    box-shadow: inset 0 0 0 2px var(--color-line);
+  }
+  .btn-line:hover {
+    box-shadow: inset 0 0 0 2px var(--color-sky);
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    min-height: 40px;
+    padding: 0 16px;
+    border-radius: 999px;
+    background: #fff;
+    font-weight: 700;
+    font-size: 14.5px;
+    color: var(--color-ink-2);
+    box-shadow: inset 0 0 0 1.5px var(--color-line);
+    transition:
+      background-color 0.2s,
+      color 0.2s,
+      box-shadow 0.2s;
+    white-space: nowrap;
+  }
+  .chip:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-sky);
+    color: var(--color-night);
+  }
+  .chip[aria-current="true"],
+  .chip[aria-checked="true"],
+  .chip[aria-pressed="true"] {
+    background: var(--color-night);
+    color: #fff;
+    box-shadow: none;
+  }
+  .label {
+    display: block;
+    font-size: 14.5px;
+    font-weight: 800;
+    color: var(--color-ink);
+  }
+  .field {
+    margin-top: 6px;
+    display: block;
+    width: 100%;
+    min-height: 50px;
+    border-radius: 16px;
+    background: var(--color-morning);
+    border: 2px solid transparent;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--color-ink);
+    transition:
+      border-color 0.2s,
+      background-color 0.2s;
+  }
+  .field:focus {
+    outline: none;
+    border-color: var(--color-sky);
+    background: #fff;
+  }
+  .field[aria-invalid="true"] {
+    border-color: var(--color-pink-d);
+    background: var(--color-pink-l);
+  }
+  .no-scrollbar {
+    scrollbar-width: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* night sky with tiny stars, for the hero, cards and footer */
+  .night-sky {
+    background-color: var(--color-night);
+    background-image:
+      radial-gradient(1.5px 1.5px at 12% 22%, #fff9 50%, transparent 51%),
+      radial-gradient(1px 1px at 28% 68%, #fff8 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 46% 14%, #fffa 50%, transparent 51%),
+      radial-gradient(1px 1px at 63% 44%, #fff7 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 78% 18%, #fff9 50%, transparent 51%),
+      radial-gradient(1px 1px at 88% 62%, #fff8 50%, transparent 51%),
+      radial-gradient(1px 1px at 6% 84%, #fff6 50%, transparent 51%),
+      radial-gradient(1.5px 1.5px at 54% 86%, #fff7 50%, transparent 51%),
+      radial-gradient(120% 90% at 85% 0%, #2b4f8f 0%, transparent 60%);
+    color: #fff;
+  }
+  /* soft cloud edge at the bottom of a block */
+  .cloud-edge {
+    position: relative;
+  }
+  .cloud-edge::after {
+    content: "";
+    position: absolute;
+    inset: auto 0 -1px 0;
+    height: 34px;
+    background: radial-gradient(28px 26px at 28px 34px, var(--edge, var(--color-morning)) 98%, transparent 100%) 0 0 / 56px 34px repeat-x;
+    pointer-events: none;
+  }
+  .card-lift {
+    transition:
+      transform 0.25s ease,
+      box-shadow 0.25s ease;
+  }
+  .card-lift:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0 1px 0 rgb(14 43 82 / 0.04),
+      0 24px 44px -26px rgb(14 43 82 / 0.45);
+  }
+}
+
+@layer utilities {
+  .swing {
+    transform-origin: 50% 0;
+    animation: swing 6s ease-in-out infinite;
+  }
+  .twinkle {
+    animation: twinkle 3.2s ease-in-out infinite;
+    transform-box: fill-box;
+    transform-origin: center;
+  }
+  .drift {
+    animation: drift 14s ease-in-out infinite;
+  }
+  .bob {
+    animation: bob 4s ease-in-out infinite;
+  }
+  .rise {
+    animation: rise 0.45s ease both;
+  }
+  .pop-in {
+    animation: pop 0.35s ease both;
+  }
+  .js .reveal {
+    opacity: 0;
+    transform: translateY(18px);
+    transition:
+      opacity 0.6s ease var(--d, 0ms),
+      transform 0.6s ease var(--d, 0ms);
+  }
+  .js .reveal.in {
+    opacity: 1;
+    transform: none;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .swing,
+    .twinkle,
+    .drift,
+    .bob,
+    .rise,
+    .pop-in {
+      animation: none !important;
+    }
+    .js .reveal {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+    html {
+      scroll-behavior: auto;
+    }
+  }
+}

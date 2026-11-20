@@ -1,0 +1,37 @@
+﻿code,name,parent code
+NM,Намуун,
+NM-DIAPERS,"Живх, өмсдөг",NM
+NM-DIAPERS-1,NB,NM-DIAPERS
+NM-DIAPERS-2,S,NM-DIAPERS
+NM-DIAPERS-3,M,NM-DIAPERS
+NM-DIAPERS-4,L,NM-DIAPERS
+NM-DIAPERS-5,XL,NM-DIAPERS
+NM-DIAPERS-6,XXL,NM-DIAPERS
+NM-DIAPERS-7,XXXL,NM-DIAPERS
+NM-DIAPERS-8,JB,NM-DIAPERS
+NM-BABY,Нярайн хэрэглэл,NM
+NM-BABY-1,"Угж, хөхөлт",NM-BABY
+NM-BABY-2,"Аяга, халбага",NM-BABY
+NM-BABY-3,"Шүд, ам",NM-BABY
+NM-BABY-4,Арчилгаа,NM-BABY
+NM-BABY-5,Соосог,NM-BABY
+NM-BABY-6,"Угаах, ариутгах",NM-BABY
+NM-BABY-7,Бусад,NM-BABY
+NM-FOOD,Хүүхдийн хоол,NM
+NM-FOOD-1,"Нухаш, каш",NM-FOOD
+NM-FOOD-2,Хуурай сүү,NM-FOOD
+NM-FOOD-3,"Жигнэмэг, зууш",NM-FOOD
+NM-FOOD-4,"Шүүс, ундаа",NM-FOOD
+NM-FOOD-5,Бусад,NM-FOOD
+NM-CARE,Арьс арчилгаа,NM
+NM-CARE-1,"Тос, лосьон",NM-CARE
+NM-CARE-2,"Шампунь, саван",NM-CARE
+NM-CARE-3,Бусад,NM-CARE
+NM-HOME,Ахуйн бараа,NM
+NM-HOME-1,Салфетка,NM-HOME
+NM-HOME-2,Угаалга,NM-HOME
+NM-HOME-3,Бусад,NM-HOME
+NM-MAMA,Ээжүүдэд,NM
+NM-TOYS,Тоглоом,NM
+NM-NAMUUN,Намуун брэнд,NM
+NM-DELIVERY,Хүргэлт,NM
