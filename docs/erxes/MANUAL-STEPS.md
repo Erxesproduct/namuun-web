@@ -73,3 +73,16 @@ Steps:
 3. Copy the payment method's `_id` into Vercel as `ERXES_PAYMENT_IDS`.
 4. Invoice lifetime: namuun.mn publishes no payment deadline (open question 4). Set one in QPay if the shop wants it.
 5. **Not yet tested** against a real QPay merchant. Do not call payments working until step 2 and 1.5 pass.
+
+## 1.3 eBarimt (НӨАТ-ын баримт)
+
+namuun.mn FAQ: «Тийм, төлбөр баталгаажсаны дараа НӨАТ-ын баримт автоматаар үүснэ.» The website never makes a receipt.
+The checkout asks «Хувь хүн» or «Байгууллага» (7-digit registry number, checked on the server) and writes it on the
+order. The receipt is issued in erxes after payment.
+
+1. Collect from Намуун: company name and TIN, district code, VAT status, product classification codes (diapers, baby
+   food, cosmetics, household goods). The 4 Улаанбаатар branches are separate companies on namuun.mn («Ай Ел Нур»,
+   «Арвин зүмбэ», «Номад эксим», «Өндөр намуун»): decide which TIN issues online receipts (open question 2).
+2. Register for **PosAPI 3.0** (ebarimt.mn) and install the PosAPI service.
+3. **Settings → eBarimt**: PosAPI URL, TIN, district code, VAT switches; assign it to the website pipeline.
+4. For every paid order: issue the receipt once (goods + delivery fee) and send the lottery number.
