@@ -111,3 +111,44 @@ erxes:
    submission. Staff move it to «Төлбөр төлөгдсөн» when the QPay invoice shows paid, then assign the branch that
    packs it (the order lists the shop's item code for each line).
 4. SMS for «registered» and «paid» (Automations → SMS), if Намуун wants them.
+
+## 1.5 Test order from cart to receipt
+
+**Verified on a local production build:** `npm run test:order -- http://localhost:3124`: **all 29 checks passed**:
+empty cart, unknown product, numeric id, sold-out refused, stock limit, under the 30,000₮ minimum refused, 3,000₮ fee,
+quantity priced, product without a stock record orderable, district / khoroo / address, QPay accepted, transfer and
+cash refused, company registry, phone, +976 prefix, email, quantity limit, the browser's price ignored, same checkout
+key → same reference, honeypot, payment check 400 / 503. Without erxes the API answers `503 not_configured`; the
+checkout then shows the phone number and keeps the cart. `--send` was **not run** (env vars not set). No payment was
+made.
+
+Steps for the real test (authorized credentials only):
+
+1. **Frontline → Forms → Create** «Вэбсайт захиалга» with fields Нэр, Утас, Имэйл, Захиалга; copy the form id and the
+   field ids into `ERXES_ORDER_FORM_ID` / `ERXES_ORDER_FIELD_IDS`. Set `ERXES_API_URL`, `ERXES_PAYMENT_IDS`. Redeploy.
+2. `npm run test:order -- https://<production url> --send`: one order, two items.
+3. Pay the invoice only with QPay's test merchant or with explicit authorization for a real charge; check that
+   `/order/<reference>` shows «Төлбөр төлөгдлөө», move the card, issue the НӨАТ receipt, mark delivered, void the test.
+
+## Permissions (erxes)
+
+- Staff who handle orders: Sales (cards), Forms (submissions), Payments (view invoices), eBarimt (issue).
+- Only the owner: Settings → Payments, Settings → eBarimt, product import.
+- The website uses only public erxes mutations; it needs no admin token.
+
+---
+
+## Open questions for Намуун
+
+1. **Countryside**: the FAQ says 2–5 days, but no fee or carrier is set. Fee per aimag, or keep it by phone?
+2. **Which company / TIN** issues the online НӨАТ receipt (4 branches are 4 companies on namuun.mn)?
+3. **Stock**: online stock is a 2026-11-20 snapshot from namuun.mn. Which system keeps live stock (POS?), and should
+   erxes or the website read it?
+4. **Payment deadline**: how long may an unpaid QPay invoice wait before the order is cancelled?
+5. **Алтай хотхон zone**: its config charges 6,000₮ (2–5 days) for 30 Сонгинохайрхан khoroos. Does that override the
+   3,000₮ for those addresses?
+6. **Missing photos**: 32 products have no usable photo (dead or empty link on namuun.mn).
+7. **Returns / exchanges**: namuun.mn's /terms and /delivery-terms pages are empty (404). What is the rule?
+8. **Membership card** (5%–15%, branches only): should online orders get it too?
+9. **Main phone**: the site uses Яармаг (8818-9642) for help. Is there a hotline?
+10. **Domain**: point namuun.mn at the new site when ready.
