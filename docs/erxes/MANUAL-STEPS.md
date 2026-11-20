@@ -55,3 +55,21 @@ Steps:
 3. **Products & Services → Import**: `namuun-products.csv`. Code `NM-<productId>` (the same id the website sends with
    every order line), the shop's own item code in its own column (for the POS), unit price in MNT, brand, stock.
 4. Spot-check 10 products (price, photo) against namuun.mn.
+
+## 1.2 Payment (QPay)
+
+namuun.mn FAQ, word for word: «QPay ашиглан төлбөр төлөх боломжтой». The website:
+
+- records the order in erxes first, then creates a QPay invoice with the erxes payment plugin (`generateInvoiceUrl`,
+  public). The customer pays on the erxes payment page and returns to `/order/<reference>`, which asks `invoicesCheck`
+  every 5 s.
+- never asks for money for an order staff cannot see. Bank transfer and cash are not offered (not on namuun.mn).
+
+Steps:
+
+1. Get Намуун's QPay merchant credentials (`client_id`, `client_secret`, `invoice_code`): the ones namuun.mn uses today
+   or a new merchant.
+2. **Settings → Payments → Add → QPay (v2)**: enter them. Make a 100₮ test invoice in erxes.
+3. Copy the payment method's `_id` into Vercel as `ERXES_PAYMENT_IDS`.
+4. Invoice lifetime: namuun.mn publishes no payment deadline (open question 4). Set one in QPay if the shop wants it.
+5. **Not yet tested** against a real QPay merchant. Do not call payments working until step 2 and 1.5 pass.
