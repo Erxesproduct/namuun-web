@@ -86,3 +86,28 @@ order. The receipt is issued in erxes after payment.
 2. Register for **PosAPI 3.0** (ebarimt.mn) and install the PosAPI service.
 3. **Settings → eBarimt**: PosAPI URL, TIN, district code, VAT switches; assign it to the website pipeline.
 4. For every paid order: issue the receipt once (goods + delivery fee) and send the lottery number.
+
+## 1.4 Delivery zones, fees and order statuses
+
+Website (done), from namuun.mn's delivery configs, branch settings and FAQ:
+
+| namuun.mn | Website |
+| --- | --- |
+| Delivery config «Бүх салбарт хамааралтай үндсэн тохиргоо»: 3,000₮, «Улаанбаатар хот», no free limit | 3,000₮ for every Улаанбаатар district; no free delivery |
+| FAQ «Улаанбаатар хотод 24–48 цаг, орон нутагт 2–5 хоног» | 24–48 h everywhere on the site |
+| Countryside: in the FAQ, but no fee anywhere | not offered online; the site points to the Мөрөн, Арвайхээр, Эрдэнэт and Яармаг branches (open question 1) |
+| Branch setting `onlineOrderMinAmount` 30,000₮ (all 4 branches) | goods under 30,000₮ cannot be ordered (checked on the server) |
+| Алтай хотхон branch's own config: 6,000₮, 2–5 days, 30 Сонгинохайрхан khoroos | not used (open question 5) |
+
+- Fees and rules live in `src/content/business.ts` and `src/data/catalog.json` (`shop`); change them there and in the
+  erxes delivery products.
+
+erxes:
+
+1. Import `docs/erxes/namuun-delivery.csv` (`NM-DELIVERY-UB` 3,000₮; `NM-DELIVERY-ALTAI` 6,000₮ for reference).
+2. **Sales → Boards → «Онлайн захиалга» → pipeline «Вэбсайт»**, stages (as on the website):
+   Төлбөр хүлээгдэж байна → Төлбөр төлөгдсөн → Бэлтгэж байна → Хүргэлтэд гарсан → Хүргэгдсэн, plus Цуцлагдсан.
+3. **Frontline → Forms → (order form) → Settings**: create a sales card in «Төлбөр хүлээгдэж байна» for every
+   submission. Staff move it to «Төлбөр төлөгдсөн» when the QPay invoice shows paid, then assign the branch that
+   packs it (the order lists the shop's item code for each line).
+4. SMS for «registered» and «paid» (Automations → SMS), if Намуун wants them.
